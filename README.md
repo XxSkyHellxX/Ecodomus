@@ -1,2 +1,2 @@
 # Ecodomus
-Pagina de negocio Ecodomuys
+Pagina de negocio Ecodomus
