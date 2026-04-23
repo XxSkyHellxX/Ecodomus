@@ -118,15 +118,18 @@ a {
 .site-nav {
   display: flex;
   gap: 22px;
+  align-items: center;
   color: var(--muted);
   font-weight: 700;
 }
 
-.site-nav a {
+.site-nav a,
+.site-nav .nav-dropdown summary {
   position: relative;
 }
 
-.site-nav a::after {
+.site-nav a::after,
+.site-nav .nav-dropdown summary::after {
   content: "";
   position: absolute;
   left: 0;
@@ -139,8 +142,77 @@ a {
   transition: transform 180ms ease;
 }
 
-.site-nav a:hover::after {
+.site-nav a:hover::after,
+.site-nav .nav-dropdown:hover summary::after,
+.site-nav .nav-dropdown[open] summary::after {
   transform: scaleX(1);
+}
+
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding-right: 6px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.nav-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+.nav-dropdown summary::marker {
+  content: "";
+}
+
+.nav-dropdown summary::after {
+  content: none;
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 0;
+  min-width: 210px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 20px;
+  background: rgba(251, 247, 241, 0.95);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 18px 36px rgba(48, 42, 33, 0.12);
+  transform-origin: top left;
+}
+
+.nav-dropdown--click .nav-dropdown-menu {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 240ms ease,
+    visibility 260ms ease;
+}
+
+.nav-dropdown--click[open] .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  animation: dropdownFadeIn 240ms ease-out both;
+}
+
+.nav-dropdown-menu a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 14px;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.nav-dropdown-menu a:hover {
+  color: var(--accent-dark);
+  background: rgba(31, 106, 82, 0.08);
 }
 
 .button {
@@ -241,6 +313,7 @@ a {
 .section-heading p,
 .benefit-card p,
 .module-card p,
+.service-card p,
 .highlight-card span,
 .cta-banner p {
   color: var(--muted);
@@ -375,6 +448,7 @@ a {
 .benefits,
 .business-rules,
 .modules,
+.services-section,
 .blog-section,
 .highlights-section,
 .contact-section {
@@ -405,6 +479,7 @@ a {
 
 .benefit-card,
 .module-card,
+.service-card,
 .highlight-card,
 .rule-card,
 .blog-card,
@@ -422,6 +497,7 @@ a {
 .benefit-card:nth-child(1),
 .rule-card:nth-child(1),
 .module-card:nth-child(1),
+.service-card:nth-child(1),
 .blog-card:nth-child(1),
 .highlight-card:nth-child(1),
 .contact-point:nth-child(1) {
@@ -431,6 +507,7 @@ a {
 .benefit-card:nth-child(2),
 .rule-card:nth-child(2),
 .module-card:nth-child(2),
+.service-card:nth-child(2),
 .blog-card:nth-child(2),
 .highlight-card:nth-child(2),
 .contact-point:nth-child(2) {
@@ -440,6 +517,7 @@ a {
 .benefit-card:nth-child(3),
 .rule-card:nth-child(3),
 .module-card:nth-child(3),
+.service-card:nth-child(3),
 .blog-card:nth-child(3),
 .highlight-card:nth-child(3) {
   animation-delay: 280ms;
@@ -466,6 +544,7 @@ a {
 
 .benefit-card h3,
 .module-card h3,
+.service-card h3,
 .rule-card h3,
 .blog-card h3,
 .contact-copy h2 {
@@ -481,6 +560,151 @@ a {
   display: grid;
   grid-template-columns: 1.15fr 1fr 1fr;
   gap: 18px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.service-card--featured {
+  background:
+    linear-gradient(180deg, rgba(31, 106, 82, 0.1) 0%, rgba(255, 253, 249, 0.94) 100%);
+}
+
+.hero--service .hero-copy h1 {
+  max-width: 12ch;
+}
+
+.hero--service .hero-note {
+  max-width: 500px;
+}
+
+.hero--service .floating-balance strong {
+  font-size: clamp(1.7rem, 3vw, 2.6rem);
+}
+
+.ecode-page {
+  background:
+    radial-gradient(circle at 15% 18%, rgba(65, 130, 255, 0.18), transparent 24%),
+    radial-gradient(circle at 88% 12%, rgba(15, 37, 64, 0.22), transparent 24%),
+    linear-gradient(180deg, #eff5fb 0%, #dce9f4 100%);
+}
+
+.ecode-page .site-header {
+  border-color: rgba(255, 255, 255, 0.48);
+  background: rgba(244, 249, 253, 0.78);
+}
+
+.ecode-page .brand-mark {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(226, 237, 248, 0.92) 100%);
+  box-shadow: 0 16px 28px rgba(18, 64, 112, 0.24);
+}
+
+.ecode-page .hero {
+  gap: 44px;
+  padding-top: 34px;
+}
+
+.ecode-page .hero-copy {
+  padding: 28px 28px 28px 0;
+}
+
+.ecode-page .hero-copy h1 {
+  max-width: 11ch;
+  line-height: 0.98;
+}
+
+.ecode-page .hero-text {
+  max-width: 60ch;
+  font-size: 1.06rem;
+}
+
+.ecode-page .hero-note {
+  border-left: 0;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(26, 90, 156, 0.12) 0%, rgba(255, 255, 255, 0.72) 100%);
+  box-shadow: 0 18px 40px rgba(34, 59, 92, 0.08);
+}
+
+.ecode-page .hero-image-wrap {
+  border-radius: 44px;
+}
+
+.ecode-page .hero-image-wrap::after {
+  background:
+    linear-gradient(180deg, rgba(10, 25, 43, 0.1) 0%, rgba(10, 25, 43, 0.42) 100%),
+    linear-gradient(135deg, rgba(74, 132, 197, 0.18) 0%, rgba(255, 255, 255, 0.04) 100%);
+}
+
+.ecode-page .floating-card {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(240, 247, 253, 0.84);
+  box-shadow: 0 24px 42px rgba(27, 47, 72, 0.14);
+}
+
+.ecode-page .trust-strip {
+  padding: 28px 30px;
+  border: 1px solid rgba(20, 53, 86, 0.08);
+  border-radius: 28px;
+  background: rgba(244, 249, 253, 0.62);
+}
+
+.ecode-page .services-grid {
+  grid-template-columns: 1.15fr 0.95fr 0.9fr;
+}
+
+.ecode-page .service-card,
+.ecode-page .rule-card,
+.ecode-page .module-card,
+.ecode-page .contact-form,
+.ecode-page .contact-point {
+  border-color: rgba(255, 255, 255, 0.52);
+  background: rgba(244, 249, 253, 0.78);
+}
+
+.ecode-page .service-card {
+  min-height: 240px;
+  border-radius: 32px;
+}
+
+.ecode-page .service-card--featured {
+  background:
+    linear-gradient(160deg, rgba(24, 83, 145, 0.14) 0%, rgba(244, 249, 253, 0.92) 58%, rgba(122, 179, 230, 0.2) 100%);
+}
+
+.ecode-page .rule-card:nth-child(2n) {
+  transform: translateY(24px);
+}
+
+.ecode-page .module-layout {
+  grid-template-columns: 1.2fr 1fr 1fr;
+}
+
+.ecode-page .feature-large {
+  background:
+    linear-gradient(180deg, rgba(18, 64, 112, 0.12) 0%, rgba(244, 249, 253, 0.94) 100%);
+}
+
+.ecode-page .contact-copy {
+  background:
+    linear-gradient(165deg, rgba(20, 77, 133, 0.18) 0%, rgba(244, 249, 253, 0.96) 62%, rgba(125, 185, 234, 0.18) 100%);
+}
+
+.ecode-page .cta-banner {
+  background:
+    linear-gradient(135deg, rgba(19, 73, 128, 0.14) 0%, rgba(244, 249, 253, 0.96) 56%, rgba(115, 173, 223, 0.24) 100%);
+}
+
+.ecode-page .button-primary {
+  background: linear-gradient(135deg, #15518d 0%, #0f3156 100%);
+  box-shadow: 0 18px 38px rgba(15, 49, 86, 0.28);
+}
+
+.ecode-page .button-secondary,
+.ecode-page .button-ghost {
+  background: rgba(247, 251, 255, 0.88);
 }
 
 .feature-large {
@@ -746,6 +970,7 @@ a {
 
 .benefit-card,
 .module-card,
+.service-card,
 .rule-card,
 .blog-card,
 .highlight-card,
@@ -757,6 +982,7 @@ a {
 
 .benefit-card,
 .module-card,
+.service-card,
 .rule-card,
 .blog-card,
 .highlight-card {
@@ -766,6 +992,7 @@ a {
 
 .benefit-card:hover,
 .module-card:hover,
+.service-card:hover,
 .rule-card:hover,
 .blog-card:hover,
 .highlight-card:hover {
@@ -777,6 +1004,7 @@ a {
 
 .page-shell:has(.benefit-card:hover)::before,
 .page-shell:has(.module-card:hover)::before,
+.page-shell:has(.service-card:hover)::before,
 .page-shell:has(.rule-card:hover)::before,
 .page-shell:has(.blog-card:hover)::before,
 .page-shell:has(.highlight-card:hover)::before {
@@ -845,6 +1073,16 @@ a {
   }
 }
 
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -860,6 +1098,7 @@ a {
   .benefit-grid,
   .rules-grid,
   .module-layout,
+  .services-grid,
   .blog-grid,
   .highlights-grid,
   .contact-section,
@@ -878,6 +1117,19 @@ a {
     flex-wrap: wrap;
   }
 
+  .nav-dropdown-menu {
+    position: static;
+    min-width: 100%;
+    margin-top: 10px;
+  }
+
+  .nav-dropdown--click[open] .nav-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    pointer-events: auto;
+  }
+
   .contact-form {
     grid-template-columns: 1fr;
   }
@@ -889,6 +1141,10 @@ a {
   .feature-large {
     grid-row: auto;
   }
+
+  .ecode-page .rule-card:nth-child(2n) {
+    transform: none;
+  }
 }
 
 @media (max-width: 720px) {
@@ -899,6 +1155,10 @@ a {
 
   .hero {
     gap: 20px;
+  }
+
+  .ecode-page .hero-copy {
+    padding-right: 0;
   }
 
   .hero h1 {
@@ -917,6 +1177,7 @@ a {
   .hero-image-wrap,
   .benefit-card,
   .module-card,
+  .service-card,
   .blog-card,
   .highlight-card,
   .contact-copy,
